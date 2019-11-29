@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Etat;
+use App\Entity\FicheFrais;
+use App\Entity\Visiteur;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class FicheFraisType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('mois',DateType::class, array('label'=>'mois:','attr'=>array('class'=>'form-control', 'placeholder'=>'mois')))
+            ->add('nbJustificatifs',NumberType::class, array('label'=>'nbJustificatifs:','attr'=>array('class'=>'form-control', 'placeholder'=>'nbJustificatifs')))
+            ->add('montantValide',NumberType::class, array('label'=>'montantValide:','attr'=>array('class'=>'form-control', 'placeholder'=>'montantValide')))
+            ->add('dateModif',DateType::class, array('label'=>'dateModif:','attr'=>array('class'=>'form-control', 'placeholder'=>'dateModif')))
+            ->add('etat',EntityType::class, array('label'=>'etat:','attr'=>array('class'=> Etat::class, 'placeholder'=>'etat', 'choice_label'=>'libelle')))
+            ->add('visituer',EntityType::class, array('label'=>'visiteur','attr'=>array('class'=>Visiteur::class, 'placeholder'=>'visiteur', 'choice_label'=>'nom')))
+            ->add('Valider',SubmitType::class, array('label'=>'Valider','attr'=>array('class'=>'btn btn-primary btn-block')))   
+            ->add('annuler',ResetType::class, array('label'=>'Quitter','attr'=>array('class'=>'btn btn-primary btn-block')))  
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => FicheFrais::class,
+        ]);
+    }
+}

@@ -1,0 +1,49 @@
+{# empty Twig template #}
+{% extends "comptable/ménu.html.twig" %}
+{% block body %}
+    
+
+	<style type="text/css">
+		<!-- body {background-color: white; color:EE8855; magin:auto; } 
+			.titre { width : 180 ;  clear:left; float:left; } 
+			.zone { float : left; color:CC8855 } -->
+	</style>
+
+        <div>
+        <div name="droite" style="margin:auto; width:50%;">
+	<div name="haut" style="margin: 2 2 2 2 ;height:10%;float:left;"><h1>Validation des Frais</h1></div>	
+	<div name="bas" style="margin : 10 2 2 2;clear:left;background-color:EE8844;color:white;height:88%;">
+        <form name="formValidFrais" method="post" action="enregValidFrais.php">
+           
+		<h1> Validation des frais par visiteur </h1>
+            
+                <p>
+		<label class="titre"> Choisir le visiteur : </label>
+                <select name="visiteur" class="selectpicker" > 
+                     <option value="null">Choisir le visiteur</option>
+                        {%set i=0  %}
+                        {% for unVisiteur in app.session.get('visiteur') %} 
+                            <option value="0">{{ unVisiteur.getNom()}} {{ unVisiteur.getPrenom()}}</option>
+                            {% set i=i+1 %}
+                        {% endfor %}  
+                        
+                </select>  
+                </p>
+                <p>
+                <label class="titre"> Mois : </label>  
+                <select name="month" class="selectpicker" ><option value="0">{{ "now"|date("F/Y") }}</option>
+                     
+                </select>
+                
+                </div>
+            <div>
+                <a href={{ path('VisiteurInfo') }} ><button type="button" class="btn btn-warning">Valider</button> </a>
+                <a href="#"><button type="button" class="btn btn-warning">Annuler</button> </a>
+            </div>
+        </form>
+	</form>
+	</div>
+</div>
+        </div>
+
+{% endblock %}

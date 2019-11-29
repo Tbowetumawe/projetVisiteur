@@ -1,0 +1,94 @@
+{% extends "visiteur/menuVisiteur.html.twig" %}
+{% block body %}
+    
+    <style type="text/css">
+<!-- body {background-color: 33a2ff; color:EE8855; magin:auto; } 
+			.titre { width : 180 ;  clear:left; float:center; } 
+			.zone { float : left; color:CC8855 } -->
+                                
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+    </style>
+
+                 <div>
+                    <div name="droite" style="margin:auto; width:50%;">
+                    <div name="haut" style="margin: 2 2 2 2 ;height:10%;float:left;"><h1>Saisir des Frais</h1></div>	
+                    <div name="bas" style="margin : 10 2 2 2;clear:left;background-color:EE8844;color:white;height:88%;">
+                <form name="formSaisieFrais" method="post" action="enregSaisieFrais.php">
+                        <h1> Saisie </h1>
+                        <label class="titre">PERIODE D'ENGAGEMENT :</label>
+                                <p>
+                        
+                                <label style="float:left;">Mois : </label> 
+                               
+                                
+                                <select name="month" class="selectpicker" ><option value="0">{{ "now"|date("m") }}</option></select>
+                                </p>
+                                <p>    
+                                <label style="float:left;">&nbsp;Année : </label>
+                                <select name="year" class="selectpicker" ><option value="0">{{ "now"|date("Y") }}</option></select>
+                                </p>
+                    <p> 
+                        <p  /><div style="clear:left;"><h2>Frais au forfait</h2></div>
+                            <label >Repas midi :</label> 
+                            <p>
+                                <input type="text" size="2" name="FRA_REPAS"  />
+                            </p>
+
+                            <label >Nuitées :</label>
+                            <p>
+                                <input type="text" size="2" name="FRA_NUIT"  />
+                            </p>
+
+                            <label >Etape :</label>
+                            <p>
+                                <input type="text" size="5" name="FRA_ETAP" />
+                            </p>
+
+                            <label >Km :</label>
+                            <p>
+                                <input type="text" size="5" name="FRA_KM" />
+                            </p>
+                    </p>
+                    <div>
+                        <a href="#" ><button type="button" class="btn btn-warning">Valider</button> </a>
+                        <a href="#"><button type="button" class="btn btn-warning">Annuler</button> </a>
+                    </div>
+                    <p class="titre" /><div style="clear:left;"><h2>Hors Forfait</h2></div>
+
+                        <div style="clear:left;">
+
+                            <div style="margin-left:180;float:left;width:90;text-align:center;"> Date <br>
+                                <input type="text" size="12" name="FRA_AUT_DAT1" class="zone"/>
+                            </div>    
+                            <div style="float:left;width:220;text-align:center;"> Libellé <br>
+                                <input type="text" size="30" name="FRA_AUT_LIB1" class="zone"/>
+                            </div>
+                            <div style="float:left;width:30;text-align:center;"> Montant <br> 
+                                <input class="zone" size="3" name="FRA_AUT_MONT1" type="text" />
+                            </div>
+                        </div>
+                        <div style="clear:left;" id="lignes">				
+                            <input type="button" id="but1" value="+" onclick="ajoutLigne(1);" class="zone" /><br><br>			
+                        </div>	
+                    <p class="titre" /><label class="titre"> </label><input class="zone"type="reset" /><input class="zone"type="submit" />
+                </form>
+                    </div>
+                    </div>
+        </div>
+{% endblock %}
+
