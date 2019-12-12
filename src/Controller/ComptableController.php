@@ -119,14 +119,14 @@ public function creerFormConnexionAction(Request $query) {
         $em = $this->getDoctrine()->getManager();
         //$v = new Visiteur();
         //$id = $v.getId();
-        $visit = $em->getRepository(Visiteur::class)->findAll();
+        //$visit = $em->getRepository(Visiteur::class)->findAll();
 
         $fichef = $em->getRepository(FicheFrais::class)->findAll();
         $LigneFF = $em->getRepository(LigneFraisForfait::class)->findAll();
         
         $lignefHf = $em->getRepository(LigneFraisHorsForfait::class)->findAll();
         
-        return $this->render('fraisforfait/FFdeVisiteur.html.twig', array('fraisforfait' => $LigneFF));
+        return $this->render('fraisforfait/FFdeVisiteur.html.twig', array('fraisforfait' => $LigneFF, 'horsforfait' => $lignefHf));
         
     }
     
@@ -136,20 +136,18 @@ public function creerFormConnexionAction(Request $query) {
      * @Route("/horsF", name="horff")
     */ 
     public function horsfait(Request $query, Session $session){
-        $hf = new LigneFraisHorsForfait();
+        /*$hf = new LigneFraisHorsForfait();
         
-        $form = $this->createForm(\App\Form\LignefraishorsforfaitType::class, $hf);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
+        $form = $this->createForm(\App\Form\LignefraishorsforfaitType::class, $hf); 
+        if ($form->isSubmitted() && $form->isValid()) {*/
         
             $em = $this->getDoctrine()->getManager();
-            $data = $form->getData();
+            //$data = $form->getData();
+        $lignefHf = $em->getRepository(LigneFraisHorsForfait::class)->findAll();
+        $FraisFF = $em->getRepository(FraisForfait::class)->findAll();
         
- 
-        $FraisFF = $em->getRepository(\App\Entity\FraisForfait::class)->findAll();
+        return $this->render('fraisforfait/FFdeVisiteur.html.twig', array('horsforfait' => $lignefHf));
         
-        return $this->render('fraisforfait/FFdeVisiteur.html.twig', array('fraisforfait' => $FraisFF));
-        } 
     }
       
       
