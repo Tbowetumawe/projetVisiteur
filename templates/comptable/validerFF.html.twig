@@ -15,11 +15,11 @@
 	<div name="bas" style="margin : 10 2 2 2;clear:left;background-color:EE8844;color:white;height:88%;">
         <form name="formValidFrais" method="post" action="enregValidFrais.php">
            
-		<h1> Validation des frais par visiteur </h1>
+		<h1>Validation des frais par visiteur</h1>
             
                 <p>
-		<label class="titre"> Choisir le visiteur : </label>
-                <select name="visiteur" class="selectpicker" > 
+		<label class="titre">Choisir le visiteur : </label>
+                <select name="visiteur" class="selectpicker" onclick ="lesVisiteur()"> 
                      <option value="null">Choisir le visiteur</option>
                         {%set i=0  %}
                         {% for unVisiteur in app.session.get('visiteur') %} 
@@ -45,5 +45,10 @@
 	</div>
 </div>
         </div>
+        
+        
+        {% block body %}        
+
+        {% endblock  %} 
 
 {% endblock %}

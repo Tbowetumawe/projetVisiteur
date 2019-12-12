@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Visiteur;
+use App\Entity\LigneFraisForfait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -21,7 +22,7 @@ class LigneFraisForfaitController extends AbstractController
     }
     
     /**
-     * @Route("/ligne/frais/forfait_add", name="_frais_forfait")
+     * @Route("/forfait_add", name="_frais_forfait")
      */
     public function addligneFF(Request $request, Session $session) {
      
@@ -37,10 +38,12 @@ class LigneFraisForfaitController extends AbstractController
                 if($form->isValid()){
                     $em = $this->getDoctrine()->getManager();
              $visiteur = $this->getDoctrine()->getManager()->getRepository(Visiteur::class)->getLeVisiteur($id);
-             $fraisforfait = $this->getDoctrine()->getManager()->getRepository(LigneFraisForfait::class)->getLalignefraisf($id);
+             $fraisforfait = $this->getDoctrine()->getManager()->getRepository(FraisForfait::class)->getLalignefraisf($id);
              
              $ligneff->setVisiteur($visiteur);
              $ligneff->setFraisForFait($fraisforfait);
+             $ligneff->setMois();
+             $ligneff->setQuantite(0);
              $em->persist($ligneff);
              $em->flush();
              
@@ -50,6 +53,7 @@ class LigneFraisForfaitController extends AbstractController
             }
             
         }
+        return $this->render('ligne_frais_forfait/lignefraisf.html.twig', array('form' =>$form->createView()));
     }
             
             

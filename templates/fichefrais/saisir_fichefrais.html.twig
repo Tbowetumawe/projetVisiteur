@@ -60,12 +60,12 @@ FICHE FRAIS
 
 <div class="form-group">
 {# Génération du label. #}
-{{ form_label(form.visituer, "visituer", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+{{ form_label(form.visiteur, "visiteur", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 {# Affichage des erreurs pour ce champ précis. #}
-{{ form_errors(form.visituer) }}
+{{ form_errors(form.visiteur) }}
 <div class="col-sm-4">
 {# Génération de l'input. #}
-{{ form_widget(form.visituer, {'attr': {'class': 'form-control'}}) }}
+{{ form_widget(form.visiteur, {'attr': {'class': 'form-control'}}) }}
 </div>
 </div>
 
@@ -85,7 +85,7 @@ FICHE FRAIS
 <div class="container">
 <label class="col-md-4 control-label"></label>
 <div class="col-md-4">
-{{ form_widget(form.Ajouter, {'attr': {'class': 'btn btn-success'}}) }}
+{{ form_widget(form.valider, {'attr': {'class': 'btn btn-success'}}) }}
 {{ form_widget(form.annuler, {'attr': {'class': 'btn btn-success'}}) }}
 </div>
 </div>

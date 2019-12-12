@@ -23,9 +23,9 @@ class FicheFraisType extends AbstractType
             ->add('nbJustificatifs',NumberType::class, array('label'=>'nbJustificatifs:','attr'=>array('class'=>'form-control', 'placeholder'=>'nbJustificatifs')))
             ->add('montantValide',NumberType::class, array('label'=>'montantValide:','attr'=>array('class'=>'form-control', 'placeholder'=>'montantValide')))
             ->add('dateModif',DateType::class, array('label'=>'dateModif:','attr'=>array('class'=>'form-control', 'placeholder'=>'dateModif')))
-            ->add('etat',EntityType::class, array('label'=>'etat:','attr'=>array('class'=> Etat::class, 'placeholder'=>'etat', 'choice_label'=>'libelle')))
-            ->add('visituer',EntityType::class, array('label'=>'visiteur','attr'=>array('class'=>Visiteur::class, 'placeholder'=>'visiteur', 'choice_label'=>'nom')))
-            ->add('Valider',SubmitType::class, array('label'=>'Valider','attr'=>array('class'=>'btn btn-primary btn-block')))   
+            ->add('etat',EntityType::class, array('class'=> Etat::class, 'choice_label'=>'etat', 'label' => "Etat"))
+            ->add('visiteur', EntityType::class, array('class' => Visiteur::class , 'choice_label' => 'visiteur', 'label' => "Visiteur"))
+            ->add('valider',SubmitType::class, array('label'=>'Valider','attr'=>array('class'=>'btn btn-primary btn-block')))   
             ->add('annuler',ResetType::class, array('label'=>'Quitter','attr'=>array('class'=>'btn btn-primary btn-block')))  
         ;
     }
@@ -33,7 +33,7 @@ class FicheFraisType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => FicheFrais::class,
+            'data_class' => FicheFrais::class
         ]);
     }
 }

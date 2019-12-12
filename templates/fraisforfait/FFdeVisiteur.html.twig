@@ -17,7 +17,7 @@ tr:nth-child(even){background-color: #f2f2f2}
 
 th {
   background-color: #4CAF50;
-  color: white;
+  color:black;
 }
 
 </style>
@@ -30,21 +30,41 @@ th {
     <form name="formValidFrais" method="post" action="enregValidFrais.php">    
    
         <div style="clear:left;"><h2>Frais au forfait </h2></div>
-            <table style="color:white;" border="1">
-                {% for unlff in app.session.get('lingeff') %}
+            <table style="color:black;" border="1">
+                {% for unff in fraisforfait %}   
                 <tr><th>Repas midi</th><th>Nuitée </th><th>Etape</th><th>Km </th><th>Situation</th></tr>
-                <tr><td><input type="text" size="3" name="repas"/></td>
-                    <td><input type="text" size="3" name="nuitee"/></td> 
-                    <td><input type="text" size="3" name="etape"/></td>
-                    <td><input type="text" size="3" name="km" /></td>
+                    {#{ unff.getFraisforfait()}}
+                    {# if unff.getFraisforfait().getId()== 4 %#}
+                <tr>
+                   
+                    <td>{% if  unff.fraisforfait.id==1%}
+                        {{unff.quantite  }}
+                        {% endif %}
+                    </td>
+                    {#% elseif unff.getFraisforfait()== 3 %#}
+                    <td>{% if  unff.fraisforfait.id==2%}
+                        {{unff.quantite  }}
+                        {% endif %}</td> 
+                    {#% elseif unff.getFraisforfait()== 1 %#}
+                    <td>{% if  unff.fraisforfait.id==3%}
+                        {{unff.quantite  }}
+                        {% endif %}</td>
+                    {#% elseif unff.getFraisforfait()== 2 %#}
+                    <td>{% if  unff.fraisforfait.id==4%}
+                        {{unff.quantite  }}
+                        {% endif %}</td>
+                
                     <td> 
+                
                         <select size="3" name="situ">
                             <option value="E">Enregistré</option>
                             <option value="V">Validé</option>
                             <option value="R">Remboursé</option>
                         </select></td>
                 </tr>
+                    {#% endif %#}
                 {% endfor %}
+           
             </table>
         
         <div style="clear:left;"><h2>Hors Forfait</h2></div>

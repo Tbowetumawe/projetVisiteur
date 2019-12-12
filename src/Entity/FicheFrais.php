@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FicheFraisRepository")
  */
+
 class FicheFrais
 {
     /**
@@ -15,12 +18,7 @@ class FicheFrais
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Visiteur")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $visiteur;
+  
 
     /**
      * @ORM\Column(type="string", length=10)
@@ -43,27 +41,24 @@ class FicheFrais
     private $dateModif;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Visiteur")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $visiteur;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etat")
      * @ORM\JoinColumn(nullable=false)
      */
     private $etat;
+     
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getVisiteur(): ?Visiteur
-    {
-        return $this->visiteur;
-    }
-
-    public function setVisiteur(?Visiteur $visiteur): self
-    {
-        $this->visiteur = $visiteur;
-
-        return $this;
-    }
+    
 
     public function getMois(): ?string
     {
@@ -113,6 +108,18 @@ class FicheFrais
         return $this;
     }
 
+    public function getVisiteur(): ?Visiteur
+    {
+        return $this->visiteur;
+    }
+
+    public function setVisiteur(?Visiteur $visiteur): self
+    {
+        $this->visiteur = $visiteur;
+
+        return $this;
+    }
+
     public function getEtat(): ?Etat
     {
         return $this->etat;
@@ -124,4 +131,11 @@ class FicheFrais
 
         return $this;
     }
+
+    
+
+   
+
+    
+    
 }

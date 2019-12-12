@@ -23,8 +23,8 @@ class LignefraishorsforfaitType extends AbstractType
             ->add('libelle',TextType::class, array('label'=>'Libelle:','attr'=>array('class'=>'form-control', 'placeholder'=>'Libelle')))
             ->add('date',DateType::class, array('label'=>'dateModif:','attr'=>array('class'=>'form-control', 'placeholder'=>'dateModif')))
             ->add('montant',NumberType::class, array('label'=>'montant:','attr'=>array('class'=>'form-control', 'placeholder'=>'montant')))
-            ->add('visiteur',EntityType::class, array('label'=>'visiteur:','attr'=>array('class'=>'form-control', 'placeholder'=>'visiteur')))
-            ->add('mois', EntityType::class, array('label'=>'mois:','attr'=>array('class'=>'form-control', 'placeholder'=>'mois')))
+            //->add('visiteur',EntityType::class, array('label'=>'visiteur:','attr'=>array('class'=>'form-control', 'placeholder'=>'visiteur')))
+            //->add('mois', EntityType::class, array('label'=>'mois:','attr'=>array('class'=>'form-control', 'placeholder'=>'mois')))
             ->add('Valider',SubmitType::class, array('label'=>'Valider','attr'=>array('class'=>'btn btn-primary btn-block')))   
             ->add('annuler',ResetType::class, array('label'=>'Quitter','attr'=>array('class'=>'btn btn-primary btn-block')))  
         ;

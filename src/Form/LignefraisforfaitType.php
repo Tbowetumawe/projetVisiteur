@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\LigneFraisForfait;
+use App\Entity\FicheFrais;
+use App\Entity\FraisForfait;       
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,10 +26,10 @@ class LignefraisforfaitType extends AbstractType
         $builder
             ->add('mois',TextType::class, array('label'=>'mois:','attr'=>array('class'=>'form-control', 'placeholder'=>'mois')))
             ->add('quantite', NumberType::class, array('label'=>'quantite:','attr'=>array('class'=>'form-control', 'placeholder'=>'quantite')))
-            ->add('visiteur', EntityType::class, array('label'=>'visiteur:','attr'=>array('class'=>'form-control', 'placeholder'=>'visiteur')))
-            ->add('fraisForfait',EntityType::class, array('label'=>'fraisForfait:','attr'=>array('class'=>'form-control', 'placeholder'=>'fraisForfait')))
+            ->add('fichefrais', EntityType::class, array('class' => FicheFrais::class , 'choice_label' => 'fichefrais', 'label' => "Visiteur"))
+            ->add('fraisforfait',EntityType::class, array('class'=> FraisForfait::class, 'label'=>'fraisforfait', 'choice_label'=>'fraisforfait'))
             ->add('Valider',SubmitType::class, array('label'=>'Valider','attr'=>array('class'=>'btn btn-primary btn-block')))   
-            ->add('annuler',ResetType::class, array('label'=>'Quitter','attr'=>array('class'=>'btn btn-primary btn-block')))     
+            //->add('annuler',ResetType::class, array('label'=>'Quitter','attr'=>array('class'=>'btn btn-primary btn-block')))     
              
                 ;
     }

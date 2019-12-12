@@ -36,6 +36,21 @@ class LigneFraisHorsForfaitRepository extends ServiceEntityRepository
     }
     */
 
+    public function getIdlfhf($id) 
+    {
+        $qb = $this->_em->createQueryBuilder();
+            $qb->select('lfhf')
+                ->from(LigneFraisHorsForfait::class, 'lfhf')
+                ->where('lfhf.id = :id')
+                ->setParameter('id', $id);
+                
+            $query = $qb->getQuery();
+            $result = $query->getResult();
+            return $result;
+    }
+
+    
+        
     /*
     public function findOneBySomeField($value): ?LigneFraisHorsForfait
     {

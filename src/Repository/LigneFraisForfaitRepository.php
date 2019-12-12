@@ -30,17 +30,31 @@ class LigneFraisForfaitRepository extends ServiceEntityRepository
     //  * @return LigneFraisForfait[] Returns an array of LigneFraisForfait objects
     //  */
     
-    public function findByExampleField()
+    public function findIdfff($id)
     {
-        return $this->createQueryBuilder('l')
-            ->select('l')
-            ->innerjoin('frais_forfait','f')
-            ->where('l.frais_forfait_id'=='f.id')
-            ->getQuery()
-            ->getResult()
-        ;
+        $idfff = $this->_em->createQueryBuilder();
+        $idfff->select('l')
+            ->from(LigneFraisForfait::class,'l')
+            ->where('l.fichefrais = :id')
+            ->setParameter('id', $id);
+            $request = $idfff->getQuery();
+            $result = $request->getResult();
+        return $result;
     }
     
+      public function getLffMois($mois, $id)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('lff')
+            ->from(LigneFraisForfait::class, 'lff')
+            ->where('lff.fraisforfait = :id')
+            ->andWhere('lff.mois = :mois')
+            ->setParameter('id', $id)
+            ->setParameter('mois', $mois);
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+        return $result;
+    }
 
     /*
     public function findOneBySomeField($value): ?LigneFraisForfait

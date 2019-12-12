@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\FicheFrais;
 use App\Entity\Visiteur;
+use App\Entity\Etat;
+use App\Form\EtatType;
 use App\Form\FicheFraisType;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,11 +28,11 @@ class FichefraisController extends AbstractController
     }
     
      /**
-     * @Route("/add_fiche", name="_fichefrais")
+     * @Route("/adfiche", name="adfiche")
      */
     
     public function addFicheFrais(Request $request, Session $session) {
-     
+        
         $fichefrais = new FicheFrais();
         
         $form = $this->createForm(FicheFraisType::class, $fichefrais);
@@ -53,11 +55,14 @@ class FichefraisController extends AbstractController
                     return $this->redirectToRoute('affichage');
                 }
             }
-        }
+        
 
-        return $this->render( 'fichefrais/saisir_fichefrais.html.twig', array('form' =>$form->createView()));
+        
+    
     }
-
+    return $this->render('fichefrais/saisir_fichefrais.html.twig', array('form' =>$form->createView()));
+    }
+                
     /**
         * @Route("/register", name="affichage")
      * 
@@ -71,7 +76,7 @@ class FichefraisController extends AbstractController
     
     
     /**
-        * @Route("/afficherFF", name="affichage")
+        * @Route("/afficherFF", name="affi")
         
     public function AfficherFF(){
         $em = $this->getDoctrine()->getManager();

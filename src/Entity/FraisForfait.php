@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,7 @@ class FraisForfait
      */
     private $Montant;
 
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -54,4 +57,6 @@ class FraisForfait
 
         return $this;
     }
+
+    
 }

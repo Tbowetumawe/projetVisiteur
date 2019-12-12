@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,17 +18,8 @@ class LigneFraisHorsForfait
      */
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\FicheFrais", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $visiteur;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\FicheFrais", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $mois;
+    
+   
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -43,35 +36,20 @@ class LigneFraisHorsForfait
      */
     private $montant;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\FicheFrais")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $fichefrais;
+
+    
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getVisiteur(): ?FicheFrais
-    {
-        return $this->visiteur;
-    }
-
-    public function setVisiteur(FicheFrais $visiteur): self
-    {
-        $this->visiteur = $visiteur;
-
-        return $this;
-    }
-
-    public function getMois(): ?FicheFrais
-    {
-        return $this->mois;
-    }
-
-    public function setMois(FicheFrais $mois): self
-    {
-        $this->mois = $mois;
-
-        return $this;
-    }
-
+   
     public function getLibelle(): ?string
     {
         return $this->libelle;
@@ -107,4 +85,18 @@ class LigneFraisHorsForfait
 
         return $this;
     }
+
+    public function getFichefrais(): ?FicheFrais
+    {
+        return $this->fichefrais;
+    }
+
+    public function setFichefrais(?FicheFrais $fichefrais): self
+    {
+        $this->fichefrais = $fichefrais;
+
+        return $this;
+    }
+
+    
 }

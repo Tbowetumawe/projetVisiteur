@@ -19,7 +19,8 @@ class VisiteurRepository extends ServiceEntityRepository
         parent::__construct($registry, Visiteur::class);
     }
     
-    public function SeConnecter($login, $mdp) {
+    public function SeConnecter($login, $mdp) : ?Visiteur
+    {
             $queryBuilder = $this->_em->createQueryBuilder()
             ->select('v')
             ->from(Visiteur::class, 'v')
@@ -28,7 +29,7 @@ class VisiteurRepository extends ServiceEntityRepository
             ->setParameter('login',$login)
             ->setParameter('mdp', $mdp);
 
-           $result =  $queryBuilder->getQuery()->getResult();
+           $result =  $queryBuilder->getQuery()->getOneOrNullResult();
 
         return $result;
     }

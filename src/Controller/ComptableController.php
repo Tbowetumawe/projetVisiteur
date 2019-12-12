@@ -12,6 +12,8 @@ use App\Form\ComptableType;
 
 use Par\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Doctrine\ORM\Query\AST\Join;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,9 +28,7 @@ class ComptableController extends AbstractController
      */
     public function index()
     {
-        return $this->render('comptable/index.html.twig', [
-            'controller_name' => 'ComptableController',
-        ]);
+        return $this->render('comptable/accueil.html.twig');
     }
     
     
@@ -101,7 +101,7 @@ public function creerFormConnexionAction(Request $query) {
            
         }
         
-        //$date = date("d-F-Y");
+        
         
         $visiteur = $session->set('visiteur', $visit);
        
@@ -115,37 +115,41 @@ public function creerFormConnexionAction(Request $query) {
     */ 
     
     public function Valider(Request $query, Session $session){
+         
         $em = $this->getDoctrine()->getManager();
+        //$v = new Visiteur();
+        //$id = $v.getId();
         $visit = $em->getRepository(Visiteur::class)->findAll();
-        $LigneFF = $em->getRepository(LigneFraisForfait::class)->findByExampleField();
+
+        $fichef = $em->getRepository(FicheFrais::class)->findAll();
+        $LigneFF = $em->getRepository(LigneFraisForfait::class)->findAll();
         
-        $v = new Visiteur();
-        $LFF = new LigneFraisForfait();
-        $listeVisiteurs=array();
-        foreach ($visit as $unVisiteur){
-           $var = $unVisiteur.getNom();
-           
-             if($var == $LigneFF.getVisiteur()){ 
-                $LFF = $session->set('lingeff', $LigneFF);
-             } 
+        $lignefHf = $em->getRepository(LigneFraisHorsForfait::class)->findAll();
         
         return $this->render('fraisforfait/FFdeVisiteur.html.twig', array('fraisforfait' => $LigneFF));
-        }
+        
     }
     
     
     
     /** 
-     * @Route("/lesFF", name="fraisff")
+     * @Route("/horsF", name="horff")
     */ 
-    public function lesFraisForfait(Request $query, Session $session){
- 
-        $em = $this->getDoctrine()->getManager();
+    public function horsfait(Request $query, Session $session){
+        $hf = new LigneFraisHorsForfait();
+        
+        $form = $this->createForm(\App\Form\LignefraishorsforfaitType::class, $hf);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+        
+            $em = $this->getDoctrine()->getManager();
+            $data = $form->getData();
+        
  
         $FraisFF = $em->getRepository(\App\Entity\FraisForfait::class)->findAll();
         
         return $this->render('fraisforfait/FFdeVisiteur.html.twig', array('fraisforfait' => $FraisFF));
-        
+        } 
     }
       
       
