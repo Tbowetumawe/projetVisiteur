@@ -42,15 +42,15 @@ class LigneFraisForfaitRepository extends ServiceEntityRepository
         return $result;
     }
     
-      public function getLffMois($mois, $id)
+      public function getLff($idf, $idff)
     {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('lff')
             ->from(LigneFraisForfait::class, 'lff')
-            ->where('lff.fraisforfait = :id')
-            ->andWhere('lff.mois = :mois')
-            ->setParameter('id', $id)
-            ->setParameter('mois', $mois);
+            ->where('lff.fichefrais = :id')
+            ->andWhere('lff.fraisforfait = :id')
+            ->setParameter('id', $idf)
+            ->setParameter('id', $idff);
         $query = $qb->getQuery();
         $result = $query->getResult();
         return $result;

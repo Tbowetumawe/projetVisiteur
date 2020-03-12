@@ -22,61 +22,67 @@ th {
 
 </style>
 
-<div>   
+  
 <div name="droite" style="margin:auto; width:50%;">
-        <div name="haut" style="margin: 2 2 2 2 ;height:20%;float:left;"><h1>Validation des Frais</h1></div>	
-        <div name="bas" style="margin : 10 2 2 2;clear:left;background-color:EE8844;color:white;height:88%;">
+    <div name="haut" style="margin: 2 2 2 2 ;height:20%;float:left;"><h1>Validation des Frais</h1></div>	
+    <div name="bas" style="margin : 10 2 2 2;clear:left;background-color:EE8844;color:white;height:88%;">
             
     <form name="formValidFrais" method="post" action="enregValidFrais.php">    
    
-        <div style="clear:left;"><h2>Frais au forfait </h2></div>
-            <table style="color:black;" border="1">
-                {% for unff in fraisforfait %}   
-                <tr><th>Etape</th><th>Km </th><th>Nuitée </th><th>Repas midi</th><th>Situation</th></tr>
-                    {#{ unff.getFraisforfait()}}
-                    {# if unff.getFraisforfait().getId()== 4 %#}
-                <tr>
-                   
-                    <td>{% if  unff.fraisforfait.id==1%}
-                            {{unff.quantite  }}
+        <div style="margin: 2 2 2 2 ;height:10%;float:center;">
+        <h2>Frais au forfait </h2></div>
+        <table style="color:black;" border="1">
+            
+            {% for unff in ligneff %} 
+                     
+            <tr><th>Etape</th><th>Km </th><th>Nuitée </th><th>Repas midi</th><th>Situation</th></tr>
+                {#{ unff.getFraisforfait()}}
+                {# if unff.getFraisforfait().getId()== 4 %#}
+            <tr>
+
+                <td>{% if unff.getFraisforfait().id==1 and unff.getFichefrais().id == unff.getFichefrais().id%}
+                        {{unff.quantite  }}
                         
-                        {% endif %}
-                    </td>
-                    {#% elseif unff.getFraisforfait()== 3 %#}
-                    <td>{% if  unff.fraisforfait.id==2%}
-                            {{unff.quantite  }}
-                        
-                        {% endif %}</td> 
-                    {#% elseif unff.getFraisforfait()== 1 %#}
-                    <td>{% if  unff.fraisforfait.id==3%}
-                            {{unff.quantite  }}
-                        
-                        {% endif %}</td>
-                    {#% elseif unff.getFraisforfait()== 2 %#}
-                    <td>{% if  unff.fraisforfait.id==4%}
-                            {{unff.quantite  }}
-                        
-                        {% endif %}</td>
+                    {% endif %}
+                </td>
+                {#% elseif unff.getligneff()== 3 %#}
+                <td>{% if unff.getFraisforfait().id==2 and unff.getFichefrais().id == unff.getFichefrais().id%}
+                        {{unff.quantite  }}
+                    {% endif %}
+                </td> 
+                {#% elseif unff.getFraisforfait()== 1 %#}
+                <td>{% if unff.getFraisforfait().id==3 and unff.getFichefrais().id == unff.getFichefrais().id%}
+                        {{unff.quantite  }}
+                    {% endif %}
+                </td>
+                {#% elseif unff.getFraisforfait()== 2 %#}
+                <td>{% if unff.getFraisforfait().id==4 and unff.getFichefrais().id == unff.getFichefrais().id%}
+                        {{unff.quantite  }}
+                    {% endif %}
+                </td>
+
+                <td> 
+                    <select size="3" name="situ">
+                        <option value="E">Enregistré</option>
+                        <option value="V">Validé</option>
+                        <option value="R">Remboursé</option>
+                    </select></td>
+            </tr>
+                    
                 
-                    <td> 
                 
-                        <select size="3" name="situ">
-                            <option value="E">Enregistré</option>
-                            <option value="V">Validé</option>
-                            <option value="R">Remboursé</option>
-                        </select></td>
-                </tr>
-                    {#% endif %#}
-                {% endfor %}
-           
-            </table>
+            {% endfor %}
+
+        </table>
+                    
         
-        <div style="clear:left;"><h2>Hors Forfait</h2></div>
+        <div style="margin: 2 2 2 2 ;height:10%;float:center;">
+        <h2>Hors Forfait</h2></div>
             {% for lhf in horsforfait %}
             <table style="color:black;" border="1">
                 
                 <tr><th>Date</th><th>Libellé </th><th>Montant</th><th>Situation</th></tr>
-                <tr><td>{#{lhf.date}#}</td>
+                <tr><td>{{lhf.date|date('Y-m-d')}}</td>
                     <td>{{lhf.libelle}}</td> 
                     <td>{{lhf.montant}}</td>
                     <td> 
@@ -87,12 +93,13 @@ th {
                         </select></td>
                 </tr>
             </table>
-            {% endfor %}   
+            {% endfor %}  
+            
         <p>
             <div>Nb Justificatifs</div><input type="text" class="zone" size="4" name="hcMontant"/>		
         </p>
         
-</div>
+        </div>
             <p>
                 <div>
                     <a href="#" ><button type="button" class="btn btn-warning">Valider</button> </a>
@@ -100,5 +107,7 @@ th {
                 </div>
             </p>
     </form>
+</div>
+
     
 {% endblock %}

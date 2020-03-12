@@ -4,105 +4,127 @@
 {% endblock %}
 {% block body %}
     
-    <style type="text/css">
-<!-- body {background-color: 33a2ff; color:EE8855; magin:auto; } 
-			.titre { width : 180 ;  clear:left; float:center; } 
-			.zone { float : left; color:CC8855 } -->
+<style type="text/css">
+body {background-color: 33a2ff; 
+      color:EE8855; 
+      magin:auto; 
+} 
+.titre { width : 180 ;  
+        clear:left; 
+        float:center; 
+} 
+			
+.zone { float : left; 
+       color:CC8855 
+}
                                 
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even){background-color: #f2f2f2}
-
 th {
   background-color: #4CAF50;
   color: white;
 }
-    </style>
-    <div>
-        
-        <div name="droite" style="margin:auto; width:50%;">
-            <div name="haut" style="margin: 2 2 2 2 ;height:10%;float:left;">
-                <div class="conteneur">
-                    <h1>Saisir des Frais</h1>
-                    <center>
-                       <h3> PERIODE D'ENGAGEMENT :</h3>
-                       <label style="float:left;">Mois : </label> 
-                       <input name="month" type="text" value= {{monthY[0]}} readonly>
-                       <p>
-                       <label style="float:left;">Année : </label>
-                       </p>
-                       <input name="year" type="text" value={{monthY[1]}}>
-                    </center> 
-                    <br/>
 
-                 </div>
-        
-                    <p> 
-                  
-                    <div>
-                        <form method="POST">
-                            <fieldset>
-                                <legend style="clear:left;"><h2>Frais au forfait</h2></legend>
-                                    
-                                <center>
-                                    
-                                        <label>Repas midi :</label> {% if  l.getId() == 4 %}<input style="float: right; margin-right:3em" type="number" size="5" name="{{ unl.getId() }}" value={{ unl.getQuantite }}>
-                                           
-                                        <label>Nuitées :</label><input style="float: right; margin-right:3em" type="number" size="5" name="{{ unl.getId() }}" value={{ unl.getQuantite }}>
-                                        
-                                            <label>Etape :</label>
-                                            <input style="float: right; margin-right:3em" type="number" size="5" name="{{ unl.getId() }}" value={{ unl.getQuantite }}>
-                                        
-                                            <label>Km :</label>
-                                            <input style="float: right; margin-right:3em" type="number" size="5" name="{{ unl.getId() }}" value={{ unl.getQuantite }}>
-                                        
-                                        <input style="float: right; margin-right:3em" type="number" size="5" name="{{ unl.getId() }}" value={{ unl.getQuantite }}> 
-                                        
-                                    
-                                    <p></p>
-                                    <input class=" btn btn-success " style="width:8em;margin-right: 15px " type="submit" value="Valider">
-                                    <input class=" btn btn-danger " style="width:8em;margin-left: 15px" type="reset" value="reset">
-                                </center>
-                            </fieldset>
-                        </form>      
-                   </p> 
-                </div>
-            </div>
-                   
-      
-        <br>            
-                    <p class="titre" /><div style="clear:left;"><h2>Hors Forfait</h2></div>
+label{
+    color: rgb(74, 30, 156);
+    width: 250px;
+    float: left;
+    clear:left;
+}
+input, select{
+    width: 400px;
+    float: left;
+    margin: 0 0 20px 0;
+}
+input[type="submit"]{
+    background-color: chartreuse;
+    width: 100px;
 
-                        <div style="clear:left;">
-                           
-                            <div style="margin-left:180;float:left;width:90;text-align:center;"> Date <br>
-                                {%  %}<input type="text" size="12" name="FRA_AUT_DAT1" class="zone"/>
-                            </div>    
-                            <div style="float:left;width:220;text-align:center;"> Libellé <br>
-                                <input type="text" size="30" name="FRA_AUT_LIB1" class="zone"/>
-                            </div>
-                            <div style="float:left;width:30;text-align:center;"> Montant <br> 
-                                <input class="zone" size="3" name="FRA_AUT_MONT1" type="text" />
-                            </div>
-                        </div>
-                        <div style="clear:left;" id="lignes">				
-                            <input type="button" id="but1" value="+" onclick="ajoutLigne(1);" class="zone" /><br><br>			
-                        </div>	
-                <div>
-                    <a href="#" ><button type="button" class="btn btn-warning">Valider</button> </a>
-                    <a href="#"><button type="button" class="btn btn-warning">Annuler</button> </a>
-                </div>
-                
+}
+
+input[type="button"]{
+    background-color: chartreuse;
+    width: 100px;
+}
+
+form{
+    width: 500px;
+    float:left;
+}
+
+</style>
+    
+        
+<div name="droite" style="margin:auto; width:50%;">
+    <div name="haut" style="margin: 2 2 2 2 ;height:10%;float:left;">
+        <div class="conteneur">
+            <h1>Saisir des Frais</h1>
+            <center>
+            <h3> PERIODE D'ENGAGEMENT :</h3>
+               <label style="float:left;">Mois : </label> 
+               <input name="month" type="text" value= {{monthY[0]}} readonly>
+               <p>
+               <label style="float:left;">Année : </label>
+               </p>
+               <input name="year" type="text" value={{monthY[1]}}>
+            </center><br/>
+        </div>
+
+        <p> 
+        <div>
+            <form method="POST">
+                <fieldset>
+                <legend style="clear:left;"><h2>Frais au forfait</h2></legend>
+                <center>
+              
+                    <label>Repas midi :</label> 
+                    <input  style="float: right; margin-right:3em" type="number" size="5" id ="repas" name="repas" value=""><br>
+
+                    <label>Nuitées :</label>
+                    <input style="float: right; margin-right:3em" type="number" id ="nuitees" size="5" name="nuitees" value=""><br>
+
+                    <label>Etape :</label>
+                    <input style="float: right; margin-right:3em" type="number" id ="etape" size="5" name="etape" value=""><br>
+
+                    <label>Km :</label>
+                    <input style="float: right; margin-right:3em" type="number" id ="km" size="5" name="km" value=""><br>
+
                     
-    </div>
+                    
+                
+                    <p></p>
+                    <input class=" btn btn-success " style="width:8em;margin-right: 15px " type="submit" value="Valider">
+                    <input class=" btn btn-danger " style="width:8em;margin-left: 15px" type="reset" value="reset">
+                </center>
+                </fieldset>
+            </form>      
+        </p> 
+        </div>
+        </div><br>  
+
+
+          
+        <p class="titre" /><div style="clear:left;"><h2>Hors Forfait</h2></div>
+        <div style="clear:left;">
+
+            <div style="margin-left:180;float:left;width:90;text-align:center;"> Date <br>
+                <input type="text" size="12" name="FRA_AUT_DAT1" class="zone"/>
+            </div>    
+            <div style="float:left;width:220;text-align:center;"> Libellé <br>
+                <input type="text" size="30" name="FRA_AUT_LIB1" class="zone"/>
+            </div>
+            <div style="float:left;width:30;text-align:center;"> Montant <br> 
+                <input class="zone" size="3" name="FRA_AUT_MONT1" type="text" />
+            </div>
+        </div>
+        <div style="clear:left;" id="lignes">				
+            <input type="button" id="but1" value="+" onclick="ajoutLigne(1);" class="zone" /><br><br>			
+        </div>	
+        <div>
+            <a href="#" ><button type="button" class="btn btn-warning">Valider</button> </a>
+            <a href="#"><button type="button" class="btn btn-warning">Annuler</button> </a>
+        </div>
+
+
+</div>
         
 {% endblock %}
 

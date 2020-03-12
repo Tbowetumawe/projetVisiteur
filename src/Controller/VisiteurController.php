@@ -27,12 +27,13 @@ use App\Entity\FraisForfait;
 class VisiteurController extends AbstractController
 {
     /**
-     * @Route("/visiteur", name="visiteur")
+     * @Route("/", name="accueil")
      */
     public function index()
     {
         return $this->render('comptable/accueil.html.twig');
     }
+    
     
     /**
      * @Route("/loginVisiteur", name="visiteur_connect")
@@ -51,23 +52,22 @@ class VisiteurController extends AbstractController
            
             $v = $em->getRepository(Visiteur::class)->seConnecter($login,$password); //on envoie les données reçus pour tester
 
-            //foreach ($v as $result){
             if($v != null){ 
 
                $session ->set('nom', $v->getNom());
                $session ->set('prenom', $v->getPrenom());
                $login = $session->set('login', $login);
                $_SESSION['v'] = $v;
-               
-               
-               
+
                return $this->redirectToRoute('session_v');            
             }    
-            //}
+           
     
     }
     return $this->render('visiteur/loginVisiteur.html.twig',array('form'=>$form->createView()));
 }
+
+
    /** 
      * @Route("/loginV", name="session_v")
      */
@@ -75,9 +75,6 @@ class VisiteurController extends AbstractController
     public function testerSessionVisiteur(){
         return $this->render('visiteur/menuVisiteur.html.twig');
     }
-      
-
-
     
     /**
      * @Route("/saissirFF", name="saissirFF")
@@ -87,26 +84,29 @@ class VisiteurController extends AbstractController
         
         $mois = null;
         if(date('j') > 15 ){
-            $mois = date("F", strtotime("+1 month", strtotime(date("F") . "1")) ); 
+            $mois = date("m")-1; 
         }
         else{
-            $mois = date('F');
+            $mois = date('m');
         }
         $monthyear = array($mois,date('Y'));
-        /*$lignfrais = new LigneFraisForfait();
-        $form = $this->createForm(LignefraisforfaitType::class, $lignfrais);
-        $form->handleRequest($request);*/
-            
         $id = $_SESSION['v']->getId();
         
-          
-        $ligneff = $this->getDoctrine()->getManager()->getRepository(LigneFraisForfait::class)->getLffMois($mois, $id);  
+        $ff = new FicheFrais();
+        $form = $this->createForm(FicheFraisType::class, $ff);
                 
-        if(sizeof($ligneff) < 1  ){   //&& $form->isSubmitted() && $form->isValid()
+        /*$repas->$request->get('repas');
+        $nuitee->$request->get('nuitees');
+        $etape->$request->get('etape');
+        $km->$request->get('km');*/
+ 
+        $ligneff = $this->getDoctrine()->getManager()->getRepository(LigneFraisForfait::class)->findAll();  
+                
+        if(sizeof($ligneff) < 1  ){   
              $em= $this->getDoctrine()->getManager();
-            //$visiteur = $this->getDoctrine()->getManager()->getRepository(Visiteur::class)->getLeVisiteur($id);
-            $fichef = $em->getrepository(FicheFrais::class)->getByMois($mois, $id);
-            $fraisForfait = $em->getRepository(LigneFraisForfait::class)->findIdfff($fichef->getId());
+            
+           // $fichef = $em->getrepository(FicheFrais::class)->getByMois($mois, $id);
+            $fraisForfait = $em->getRepository(LigneFraisForfait::class)->findIdfff($id);
             foreach($fraisForfait as $lff){
               
                 $lignfraisf = new LigneFraisForfait();
@@ -114,43 +114,14 @@ class VisiteurController extends AbstractController
                 $lff->setFraisForfait($lff);
                 $lff->setMois($mois);
                 $lff->setQuantite(0);  
-
                 $em->persist($lignfraisf);
-
                 $em->flush();
 
                 $lignfraisf = null;
                 
-                $request->getSession()->getFlashBag()->add('notice', 'lfraisforfait bien enregistre.'); 
+                $request->getSession()->getFlashBag()->add('notice', 'lfraisforfait bien enregistre.');                              
                 
-                
-                
-                
-                /*$etat = $this->getDoctrine()->getRepository(Etat::class)->findAll();
-                $FicheFrais = new FicheFrais();
-                    $FicheFrais->setDateModif(new \DateTime());
-                    $FicheFrais->setVisiteur($visiteur);
-                    $FicheFrais->setMois($mois);
-                    $FicheFrais->setMontantValide(0);
-                    $FicheFrais->setNbJustificatifs(0);
-                    $FicheFrais->setEtat($etat);
-                    $entityManager->persist($FicheFrais);
-                    $entityManager->flush();
-                    
-                    
-                $ligneHF=$this->getDoctrine()->getREpository(LigneFraisHorsForfait::class)->getIdVMois($mois, $id);
-        
-        $lfhf = new LigneFraisHorsForfait();
-        $fom = $this->createForm(\App\Entity\LigneFraisHorsForfait::class, $lfhf);
-        $form->handleRequest($query);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $lfhf->setMois($mois);
-                $lfhf->setIdVisiteur($visiteur);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($lfhf);
-                $em->flush();*/
             }
-            $ligneff = $this->getDoctrine()->getManager()->getRepository(LigneFraisForfait::class)->getLffMois($mois, $id);  
             
         }  
         
@@ -162,7 +133,7 @@ class VisiteurController extends AbstractController
  
  
  
- /** 
+    /** 
      * @Route("/lfhf", name="lfhf")
      */
     

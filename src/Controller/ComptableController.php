@@ -9,7 +9,6 @@ use App\Entity\Visiteur;
 use App\Entity\FicheFrais;
 use App\Form\FicheFraisType;
 use App\Form\ComptableType;
-
 use Par\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -24,24 +23,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class ComptableController extends AbstractController
 {
     /**
-     * @Route("/comptable", name="comptable")
+     * @Route("/", name="accueil")
      */
     public function index()
     {
         return $this->render('comptable/accueil.html.twig');
     }
-    
-    
-             
-    /**
-     * @Route("/welcome", name="accueil")
-     */
-    public function accueil()
-    {
-       return $this->render('comptable/accueil.html.twig');
-    }
-
-    
+       
     /**
      * @Route("/comptableS", name="compta_session")
      */
@@ -88,25 +76,25 @@ public function creerFormConnexionAction(Request $query) {
     public function selectV(Request $query, Session $session){
         
         $em = $this->getDoctrine()->getManager();
- 
         $visit = $em->getRepository(Visiteur::class)->findAll();
-        
         $visiteur= new Visiteur();
-        $listeVisiteurs=array();
-        foreach ($listeVisiteurs as $unVisiteur){
-            
+        /*$listeVisiteurs=array();
+        foreach ($listeVisiteurs as $unVisiteur){ 
             array_push($listeVisiteurs, $unVisiteur)  ; 
-
-            return $this->redirectToRoute('VisiteurInfo');
-           
+            return $this->redirectToRoute('VisiteurInfo'); 
+        }*/
+        $mois = null;
+        if(date('j') > 15 ){
+            $mois = date("m")-1; 
         }
-        
-        
+        else{
+            $mois = date('m');
+        }
+        $monthyear = array($mois,date('Y'));
         
         $visiteur = $session->set('visiteur', $visit);
        
-        return $this->render('comptable/validerFF.html.twig', array('visiteur' => $visit));
-        
+        return $this->render('comptable/validerFF.html.twig', array('visiteur' => $visit, 'mois_annee' => $monthyear));        
     }
     
     
@@ -117,23 +105,28 @@ public function creerFormConnexionAction(Request $query) {
     public function Valider(Request $query, Session $session){
          
         $em = $this->getDoctrine()->getManager();
-        //$v = new Visiteur();
-        //$id = $v.getId();
-        //$visit = $em->getRepository(Visiteur::class)->findAll();
+
+        $v = $em->getRepository(Visiteur::class)->findAll();
 
         $fichef = $em->getRepository(FicheFrais::class)->findAll();
-        $LigneFF = $em->getRepository(LigneFraisForfait::class)->findAll();
+        $fraisf = $em->getRepository(FraisForfait::class)->findAll();
+     
+        $idf = $fichef[0]->getId();
+        //$idv = $v[0]->getId();
+        $idff = $fraisf[0]->getId();
+        
+        $LigneFF = $em->getRepository(LigneFraisForfait::class)->getLff($idf, $idff);
         
         $lignefHf = $em->getRepository(LigneFraisHorsForfait::class)->findAll();
         
-        return $this->render('fraisforfait/FFdeVisiteur.html.twig', array('fraisforfait' => $LigneFF, 'horsforfait' => $lignefHf));
+        return $this->render('fraisforfait/FFdeVisiteur.html.twig', array('fichef' => $fichef, 'ligneff' => $LigneFF, 'horsforfait' => $lignefHf, 'visiteur' => $v ));
         
     }
     
     
     
     /** 
-     * @Route("/horsF", name="horff")
+     * @Route("/modif", name="modif")
     */ 
     public function horsfait(Request $query, Session $session){
         /*$hf = new LigneFraisHorsForfait();
